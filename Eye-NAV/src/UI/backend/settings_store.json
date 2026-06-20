@@ -1,0 +1,7 @@
+{
+  "companion_mode": true,
+  "distance_estimation": true,
+  "descriptive_mode": true,
+  "developer_mode": true,
+  "gps_navigation": false
+}

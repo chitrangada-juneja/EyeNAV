@@ -1,0 +1,145 @@
+{
+    "system": {
+        "tick_rate": 30,
+        "debug_mode": true
+    },
+    "perception": {
+        "yolo_model": "yoloe-v8l-seg.pt",
+        "yolo_conf_threshold": 0.3,
+        "path_conf_threshold": 0.3,
+        "door_conf_threshold": 0.3,
+        "obj_conf_threshold": 0.6,
+        "yolo_prompts": [
+            "person",
+            "moving person",
+            "bicycle",
+            "car",
+            "motorcycle",
+            "bus",
+            "truck",
+            "traffic light",
+            "fire hydrant",
+            "bench",
+            "pothole",
+            "concrete pedestrian sidewalk",
+            "asphalt road for cars",
+            "grass field",
+            "dirt path",
+            "stairs",
+            "traffic cone",
+            "trash can",
+            "stone",
+            "building",
+            "tree",
+            "door",
+            "branch",
+            "tile",
+            "floor",
+            "rocks",
+            "mirror",
+            "glass",
+            "window",
+            "pictures",
+            "toy",
+            "carpet",
+            "delivery robot",
+            "walkway",
+            "brick wall",
+            "corridor floor",
+            "pole",
+            "lamppost",
+            "street light",
+            "signpost",
+            "emergency post"
+        ],
+        "primary_labels": [
+            "sidewalk",
+            "footpath",
+            "walkway",
+            "pavement",
+            "concrete",
+            "path",
+            "tile",
+            "floor",
+            "marble",
+            "carpet",
+            "hallway",
+            "corridor floor"
+        ],
+        "fallback_labels": [
+            "asphalt",
+            "road",
+            "rough ground",
+            "gravel",
+            "pebbles",
+            "grass",
+            "dirt"
+        ],
+        "forbidden_labels": [
+            "pillar",
+            "building",
+            "fence",
+            "door"
+        ],
+
+        "depth_model": "metric3d_vit_small",
+        "depth_interval_seconds": 1.0,
+        "depth_scale": 1.0,
+        "is_metric": true,
+        "confidence_levels": {
+            "high": 0.9,
+            "medium": 0.7,
+            "low": 0.6
+        },
+        "preprocessing": {
+            "auto_enhance": true,
+            "brightness": 0.0,
+            "contrast": 1.0,
+            "gamma": 1.0
+        }
+    },
+    "safety": {
+        "critical_distance_meters": 2,
+        "warning_distance_meters": 4.5,
+        "advisory_distance_meters": 6.0,
+        "unknown_obstacle_distance": 1.0,
+        "navigation_ttl_seconds": 5.0
+    },
+    "io": {
+        "camera_id": 0,
+        "tts_engine": "coqui",
+        "haptic_port": "COM3",
+        "tts_settings": {
+            "min_speech_interval": 5.0,
+            "critical_repeat_interval": 6.0,
+            "warning_interval_factor": 1.2
+        }
+    },
+    "llm": {
+        "api_key_env": "GOOGLE_API_KEY",
+        "model_name": "gemini-2.5-flash",
+        "interval_seconds": 30.0,
+        "max_scene_objects": 5,
+        "prioritized_hazards": [
+            "person",
+            "moving person",
+            "car",
+            "motorcycle",
+            "skateboard",
+            "bicycle",
+            "vehicle",
+            "brick wall",
+            "unknown obstacle",
+            "delivery robot",
+            "unknown obstacle"
+        ],
+        "verbose_mode": false,
+        "metric_units": true,
+        "critical_distance_threshold": 0.3
+    },
+    "ui": {
+        "telemetry_font_scale": 0.85,
+        "telemetry_font_thickness": 2,
+        "ui_font_size": 1.3
+    }
+}

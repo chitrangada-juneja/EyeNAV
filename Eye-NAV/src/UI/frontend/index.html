@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"/>
+  <meta name="theme-color" content="#0a0f1e"/>
+  <meta name="description" content="Eye-NAV – AI assistive navigation for the visually impaired"/>
+  <title>Eye-NAV</title>
+  <link rel="stylesheet" href="style.css"/>
+</head>
+<body>
+<div id="phone-shell">
+
+  <!-- Danger overlay (full-screen red pulse) -->
+  <div id="danger-overlay" class="danger-overlay"></div>
+
+  <!-- ═══ SPLASH ═══════════════════════════════════════════════════ -->
+  <section id="screen-splash" class="screen active" aria-label="Splash">
+    <div class="splash-inner">
+      <img src="assets/logo.png" alt="Eye-NAV" class="splash-logo"/>
+      <div style="text-align:center;">
+        <h1 class="splash-title">Eye-NAV</h1>
+        <p class="splash-sub">Assistive Navigation AI</p>
+      </div>
+      <div class="splash-loader" aria-label="Loading">
+        <div class="splash-dot"></div>
+        <div class="splash-dot"></div>
+        <div class="splash-dot"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ HOME ══════════════════════════════════════════════════════ -->
+  <section id="screen-home" class="screen" aria-label="Home">
+    <!-- Spacer to match header height of running screen -->
+    <div style="height: 52px; flex-shrink: 0;"></div>
+
+    <div class="screen-inner" style="justify-content:center; gap:32px; padding-top:0;">
+
+      <!-- Branding (Top) -->
+      <div style="text-align:center; padding-top:20px;">
+        <p class="app-name">Eye-NAV</p>
+        <p class="app-tagline">AI Assistive Navigation</p>
+      </div>
+
+      <!-- Control Group (Center) -->
+      <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+        <button id="start-btn" class="eye-btn idle" aria-label="Tap to start">
+          <img src="assets/logo.png" alt="" class="logo-img"/>
+        </button>
+        <p style="font-size:0.75rem;color:var(--text-3);font-weight:700;letter-spacing:.12em;">TAP TO START</p>
+      </div>
+
+      <!-- Settings (Bottom) -->
+      <div style="padding-bottom:10px;">
+        <button id="btn-settings-home" class="icon-btn on"
+                style="flex-direction:row;gap:9px;width:auto;padding:12px 26px;"
+                aria-label="Settings">
+          <span class="icon" style="font-size:1.1rem;">⚙️</span>
+          <span class="lbl" style="font-size:0.72rem; letter-spacing:0.05em;">Settings</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ RUNNING ════════════════════════════════════════════════════ -->
+  <section id="screen-running" class="screen" aria-label="Navigation active">
+
+    <!-- Header -->
+    <div class="screen-header">
+      <div class="status-dot" id="run-dot"></div>
+      <h1>Eye-NAV Active</h1>
+      <button id="btn-dev-open" class="btn-pill danger-pill"
+              aria-label="Developer mode" style="display:none;">DEV</button>
+    </div>
+
+    <div class="screen-inner" style="justify-content:center; gap:32px; padding-top:10px;">
+
+      <!-- Risk group (Top) -->
+      <div id="risk-badge" class="risk-badge clear">
+        <span id="risk-icon">🟢</span>
+        <span id="risk-text">ALL CLEAR</span>
+      </div>
+
+      <!-- Control Group (Center) -->
+      <div style="flex:1; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:16px;">
+        <button id="stop-btn" class="eye-btn pulsing running-eye" aria-label="Tap to stop">
+          <img src="assets/logo.png" alt="" class="logo-img"/>
+        </button>
+        <p style="font-size:0.75rem;color:var(--text-3);font-weight:700;letter-spacing:.12em;">TAP TO STOP</p>
+
+        <!-- Message card below button in the center group -->
+        <div id="llm-card" class="llm-card" aria-live="polite" style="min-height:80px; margin-top:20px; width:100%;">
+          <span class="llm-icon" id="llm-icon">🔵</span>
+          <span class="llm-text" id="llm-text">Waiting for AI response…</span>
+        </div>
+      </div>
+
+      <!-- Toggles (Bottom) -->
+      <div style="display:flex;gap:20px;width:100%;justify-content:center;padding-bottom:10px;">
+        <button id="audio-toggle" class="icon-btn on" aria-pressed="true" aria-label="Audio">
+          <span class="icon" id="audio-icon">🔊</span>
+          <span class="lbl">Audio</span>
+        </button>
+        <button id="haptic-toggle" class="icon-btn on" aria-pressed="true" aria-label="Haptic">
+          <span class="icon" id="haptic-icon">📳</span>
+          <span class="lbl">Haptic</span>
+        </button>
+        <button id="btn-cam-switch" class="icon-btn" aria-label="Switch Camera">
+          <span class="icon">🔄</span>
+          <span class="lbl">Switch</span>
+        </button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ═══ DEVELOPER MODE ════════════════════════════════════════════ -->
+  <section id="screen-dev" class="screen" aria-label="Developer mode">
+
+    <div class="screen-header">
+      <div class="status-dot" id="dev-dot"></div>
+      <h1>Developer Mode</h1>
+      <button id="btn-dev-exit" class="btn-pill danger-pill">EXIT</button>
+    </div>
+
+    <div class="screen-inner dev-grid-container" style="justify-content:flex-start;gap:14px;padding-top:18px;overflow-y:auto;">
+
+      <!-- Left Column (Video + Detections) -->
+      <div class="dev-column dev-col-1">
+        <!-- Video Feed toggle button + panel -->
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:4px;">
+          <p class="dev-section" style="margin:0;">Video Feed</p>
+          <div style="display:flex; gap:8px;">
+            <button id="dev-feed-toggle"
+                    style="background:var(--surface-2,#1e2a3a);color:var(--text-1,#fff);border:1.5px solid var(--border,#2a3a50);border-radius:10px;padding:6px 16px;font-size:0.75rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;"
+                    aria-pressed="false" aria-label="Toggle Video Feed">
+              <span>📷</span><span id="dev-feed-lbl">Video Off</span>
+            </button>
+            <button id="dev-cam-switch"
+                    style="background:var(--surface-2,#1e2a3a);color:var(--text-1,#fff);border:1.5px solid var(--border,#2a3a50);border-radius:10px;padding:6px 16px;font-size:0.75rem;font-weight:600;cursor:pointer;display:flex;align-items:center;gap:6px;"
+                    aria-label="Switch Camera">
+              <span>🔄</span><span>Switch</span>
+            </button>
+            <button id="dev-fullscreen-btn" 
+                    style="background:var(--blue-bright,#3b82f6);color:#fff;border:none;border-radius:10px;padding:6px 14px;font-size:0.75rem;font-weight:700;cursor:pointer;display:none;align-items:center;justify-content:center;box-shadow:0 4px 12px var(--blue-glow);"
+                    aria-label="Toggle Full Screen">
+              <span style="font-size:1.15rem; line-height:1;">⛶</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Video feed panel -->
+        <div id="dev-feed-panel" style="display:none;position:relative;overflow:hidden;background:#000;aspect-ratio:1/1;width:100%;flex-shrink:0;border-radius:12px; margin-bottom: 20px;">
+          <img id="dev-render-img" src="" alt="Server Feed" style="width:100%;height:100%;display:block;"/>
+          <div id="dev-feed-placeholder" style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;color:#888;font-size:0.8rem;">
+            AWAITING SERVER FEED...
+          </div>
+          <button id="dev-minimize-btn" class="tele-close-btn" aria-label="Exit Full Screen">✕</button>
+        </div>
+      </div>
+
+      <!-- Right Column (Stats + LLM) -->
+      <div class="dev-column dev-col-2">
+        <!-- System Profiler -->
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:4px;">
+          <p class="dev-section" style="margin:0;">System Profiler</p>
+          <div id="dev-risk-badge" class="risk-badge clear" style="font-size:0.75rem; padding:4px 10px;">
+            <span id="dev-risk-icon">🟢</span>
+            <span id="dev-risk-text">ALL CLEAR</span>
+          </div>
+        </div>
+        <div class="card" style="padding:12px 16px; margin-bottom: 16px;">
+          <div style="display:flex; justify-content:space-between; margin-bottom:10px; border-bottom: 1px solid var(--border); padding-bottom: 8px;">
+            <div style="display:flex; gap:20px; align-items:baseline;">
+              <div style="display:flex; align-items:baseline; gap:8px;">
+                <span class="d-lbl" style="white-space:nowrap;">SERVER FPS</span>
+                <span class="d-val" id="dev-fps" style="font-size:1.4rem; color:var(--blue-light,#60a5fa);">—</span>
+              </div>
+              <div style="display:flex; align-items:baseline; gap:8px;">
+                <span class="d-lbl" style="white-space:nowrap;">UI FPS</span>
+                <span class="d-val" id="ui-fps" style="font-size:1.4rem; color:#10b981;">—</span>
+              </div>
+            </div>
+            <div style="text-align:right; display:flex; align-items:baseline; gap:8px;">
+              <span class="d-lbl" style="white-space:nowrap;">TOTAL LATENCY</span>
+              <span class="d-val" id="prof-total" style="font-size:1.4rem;">—</span>
+            </div>
+          </div>
+          <div style="display:flex; justify-content:space-between; margin-bottom:8px; align-items: center; white-space:nowrap;">
+            <span class="d-lbl">BOTTLENECK</span>
+            <span class="d-val" id="prof-bottleneck" style="color:var(--danger-glow); font-size:0.95rem; font-weight:700;">—</span>
+          </div>
+          <div style="display:flex; justify-content:space-between; font-size:0.68rem; color: var(--text-3); font-weight: 500; font-family: monospace; white-space:nowrap; gap:4px; overflow:hidden;">
+            <span>Net:<span id="prof-network" style="color:var(--text-1); margin-left:2px;">—</span></span>
+            <span>YOLO:<span id="prof-yolo" style="color:var(--text-1); margin-left:2px;">—</span></span>
+            <span>Depth:<span id="prof-depth" style="color:var(--text-1); margin-left:2px;">—</span></span>
+            <span>Path:<span id="prof-path" style="color:var(--text-1); margin-left:2px;">—</span></span>
+            <span>Encode:<span id="prof-encode" style="color:var(--text-1); margin-left:2px;">—</span></span>
+            <span>Quality:<span id="prof-quality" style="color:#4ade80; margin-left:2px;">—</span></span>
+          </div>
+        </div>
+
+        <!-- LLM output -->
+        <p class="dev-section">AI Response</p>
+        <div id="dev-llm-box" class="llm-card" aria-live="polite" style="margin-bottom: 16px;">
+          <span class="llm-icon">🤖</span>
+          <span class="llm-text" id="dev-llm-text">Awaiting response…</span>
+        </div>
+
+        <!-- Depth -->
+        <p class="dev-section">Depth Estimation</p>
+        <div class="card" style="padding:14px 16px; margin-bottom: 16px;">
+          <div class="depth-bar-track">
+            <div class="depth-bar-fill" id="depth-bar" style="width:10%;"></div>
+          </div>
+          <div class="depth-stats">
+            <div class="depth-stat"><span class="d-lbl">Min</span><span class="d-val" id="d-min">—</span></div>
+            <div class="depth-stat"><span class="d-lbl">Mean</span><span class="d-val" id="d-mean">—</span></div>
+            <div class="depth-stat"><span class="d-lbl">Max</span><span class="d-val" id="d-max">—</span></div>
+          </div>
+        </div>
+
+        <!-- Speech Log (Diagnostic) -->
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:4px;">
+          <p class="dev-section" style="margin:0;">Speech Log</p>
+          <button id="speech-log-toggle"
+                  style="background:var(--surface-2,#1e2a3a);color:var(--text-3,#94a3b8);border:1.5px solid var(--border,#2a3a50);border-radius:8px;padding:3px 12px;font-size:0.7rem;font-weight:600;cursor:pointer;"
+                  aria-expanded="false" aria-controls="dev-speech-log">▶ Show</button>
+        </div>
+        <div id="dev-speech-log" class="card" style="display:none;flex:1;min-height:120px;font-family:monospace;font-size:0.65rem;background:#000;color:#0f0;overflow-y:auto;padding:8px;line-height:1.4;margin-bottom:10px;">
+          <div style="color:#666;">Awaiting speech events...</div>
+        </div>
+
+        <!-- Detected Objects -->
+        <div style="display:flex;align-items:center;justify-content:space-between;width:100%;margin-bottom:4px;">
+          <p class="dev-section" style="margin:0;">Detected Objects (<span id="dev-count">0</span>)</p>
+          <button id="det-list-toggle"
+                  style="background:var(--surface-2,#1e2a3a);color:var(--text-3,#94a3b8);border:1.5px solid var(--border,#2a3a50);border-radius:8px;padding:3px 12px;font-size:0.7rem;font-weight:600;cursor:pointer;"
+                  aria-expanded="true" aria-controls="detection-list">▼ Hide</button>
+        </div>
+        <div id="detection-list" class="detection-list" aria-live="polite" style="flex:1;min-height:80px;">
+          <p style="font-size:0.8rem;color:var(--text-3);padding:6px 0;">No objects detected.</p>
+        </div>
+
+
+        <!-- Source -->
+        <p class="dev-section" style="margin-top: 10px;">Data Source: <span id="dev-source" style="color:var(--blue-light);font-weight:700;">MOCK</span></p>
+      </div>
+
+      <div style="height:6px; flex-shrink: 0; width: 100%;"></div>
+    </div>
+  </section>
+
+  <!-- ═══ SETTINGS ══════════════════════════════════════════════════ -->
+  <section id="screen-settings" class="screen" aria-label="Settings">
+
+    <div class="screen-header">
+      <span style="font-size:1.1rem;">⚙️</span>
+      <h1>Settings</h1>
+      <button id="btn-settings-back" class="btn-pill" aria-label="Back">BACK</button>
+    </div>
+
+    <div class="screen-inner" style="justify-content:space-between;padding-top:28px;">
+
+      <div class="card">
+        <div class="settings-list">
+
+          <div class="setting-row">
+            <span class="setting-label">Companion Mode</span>
+            <label class="toggle"><input type="checkbox" id="s-companion"/><span class="toggle-track"></span></label>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-label">Distance Estimation</span>
+            <label class="toggle"><input type="checkbox" id="s-distance"/><span class="toggle-track"></span></label>
+          </div>
+
+          <div class="setting-row">
+            <span class="setting-label">Descriptive Mode</span>
+            <label class="toggle"><input type="checkbox" id="s-descriptive"/><span class="toggle-track"></span></label>
+          </div>
+
+          <div class="setting-row" style="border-bottom:none;">
+            <span class="setting-label">Developer Mode</span>
+            <label class="toggle"><input type="checkbox" id="s-dev"/><span class="toggle-track"></span></label>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="settings-actions">
+        <button id="btn-discard" class="btn-discard">✕ Discard</button>
+        <button id="btn-save" class="btn-save">✓ Save</button>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- phone-shell -->
+
+  <!-- Hidden elements for Camera Capture (Must NOT be display:none for some browsers to keep rendering) -->
+  <video id="nav-video" style="position:fixed; top:-5000px; left:-5000px; width:1px; height:1px; opacity:0; pointer-events:none;" autoplay playsinline muted></video>
+  <canvas id="nav-canvas" width="640" height="640" style="position:fixed; top:-5000px; left:-5000px; width:1px; height:1px; opacity:0; pointer-events:none;"></canvas>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>

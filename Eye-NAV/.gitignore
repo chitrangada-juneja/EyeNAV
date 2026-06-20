@@ -1,0 +1,14 @@
+data/
+*.mp4
+venv/
+myenv/
+.venv/
+*.pt
+*.csv
+*.pt
+__pycache__
+mobileclip_blt.ts
+.env
+src/Depth/calibration/
+src/UI/www.canva.com_design_*.png
+.vscode/
