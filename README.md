@@ -105,11 +105,6 @@ python app.py --live --tunnel
 -   `src/nlp/`: The "Voice" (LLM Prompting and Logic).
 -   `config.json`: Hardware & AI configuration (Switch models here).
 
-## 👥 Team
-- **Stephin Tomson** ([GitHub](https://github.com/stephintomson2152003))
-- **Hidoyat** ([GitHub](https://github.com/HidoyatRuzmetov))
-- **Chitrangada Juneja** ([GitHub](https://github.com/chitrangada-juneja))
-
 ## References
 
 -   Patel, K., & Parmar, B. (2022). Assistive device using computer vision and image processing for visually impaired; review and current status. Disability and Rehabilitation: Assistive Technology, 17(3), 290–297. https://doi.org/10.1080/17483107.2020.1786731
