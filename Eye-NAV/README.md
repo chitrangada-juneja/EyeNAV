@@ -104,10 +104,6 @@ python app.py --live --tunnel
 -   `src/nlp/`: The "Voice" (LLM Prompting and Logic).
 -   `config.json`: Hardware & AI configuration (Switch models here).
 
-## 👥 Team
-- **Stephin Tomson** ([GitHub](https://github.com/stephintomson2152003))
-- **Hidoyat** ([GitHub](https://github.com/HidoyatRuzmetov))
-- **Chitrangada Juneja** ([GitHub](https://github.com/chitrangada-juneja))
 
 ## References
 
