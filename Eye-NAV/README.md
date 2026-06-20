@@ -1,8 +1,8 @@
-# Eye-NAV: AI-Powered Navigation for the Visually Impaired 👁️
+# Eye-NAV: AI-Powered Navigation for the Visually Impaired 
 
 An AI-powered mobile assistant for the visually impaired, featuring real-time obstacle detection (YOLOv8), metric depth estimation, and an LLM-driven voice interface for enhanced safety and independence.
 
----
+___
 
 ## 🏗️ System Architecture
 
